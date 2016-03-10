@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Angular 2 Tips &amp; Tricks</title>
+
+  <meta name="description" content="Zone.js">
+  <meta name="author" content="Wojciech Kwiatek">
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+  <!-- Code syntax highlighting -->
+  <link rel="stylesheet" href="lib/css/monokai.css">
+
+  <style media="screen">
+  .reveal h1, .reveal h2, .reveal h3 {
+    text-transform: none;
+  }
+  .img-raw {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .line {
+    display: block;
+    transition: .2s;
+    opacity: .3;
+  }
+  /*.line.focus { background: yellow; }*/
+
+  .line:not(.focus) ~ .line.focus {
+    transition: .2s;
+    opacity: 1;
+  }
+</style>
+
+<!-- Printing and PDF exports -->
+<script>
+ var link = document.createElement( 'link' );
+ link.rel = 'stylesheet';
+ link.type = 'text/css';
+ link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+ document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>Angular 2 Tips &amp; Tricks</h1>
+          <br>
+          <p>
+            <span>Wojciech Kwiatek</span>
+            <br>
+            <small><a href="mailto:wojtek.kwiatek@gmail.com">wojtek.kwiatek@gmail.com</a></small>
+          </p>
+        </section>
+
+        <!-- <section>
+          <h2>About me</h2>
+          <img src="img/wk.png" alt="wojciech" style="float:left; width: 250px; border-radius: 50%; border-color: #42affa">
+          <img src="img/wk_in.png" alt="wojciech" style="float:left; width: 250px; position: relative; left: -80px; border-radius: 50%; border-color: #42affa">
+          <div>
+            <img src="img/livechat.png" alt="" class="img-raw" style="width: 200px; margin-top: 30px;">
+            <br>
+            <img src="img/devmeetings.jpg" alt="" class="img-raw" style="width: 250px;">
+          </div>
+        </section> -->
+
+        <section>
+          <h2>Is it ready?</h2>
+          <img src="img/ng1.png" class="img-raw" style="width: 400px;" alt="ng1">
+          <span style="position: relative; top: -200px;">vs</span>
+          <img src="img/ng2.png" class="img-raw" style="position: relative; width: 400px; top: -80px;" alt="ng2">
+        </section>
+
+        <section>
+          <h2>Not the only choice to make</h2>
+          <div class="fragment">There's ES5, ES6, ES7, TypeScript, AtScript, Dart...</div>
+        </section>
+
+        <section>
+          <h2>Go with TypeScript!</h2>
+          <div class="fragment">But you're not forced to use types</div>
+        </section>
+
+        <section>
+          <img src="img/jspm.png" class="img-raw" alt="">
+          <h2 class="fragment">jspm</h2>
+        </section>
+
+        <section>
+          <h2>What problems does it solve?</h2>
+        </section>
+
+        <section>
+          <h2>Great idea, but...</h2>
+          <ul class="fragment">
+            <li>way too slow</li>
+            <li>still need a build tool</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Use webpack instead</h2>
+          <div class="fragment">Unfortunately without hot reload yet</div>
+          <img src="img/react_deal.png" class="fragment img-raw" alt="react" style="display: inline-block; postion: relative; width: 250px; right: 0px;">
+        </section>
+
+        <section>
+         <h1>Web Components</h1>
+        </section>
+
+        <section>
+         <h2>Specs:</h2>
+         <ul>
+           <li>Custom elements</li>
+           <li>Templates</li>
+           <li>HTML imports</li>
+           <li>Shadow DOM</li>
+         </ul>
+        </section>
+
+        <section>
+          <h2>Shadow DOM</h2>
+        </section>
+
+        <section>
+          <h3>Encapsulation by default</h3>
+         <pre><code contenteditable>
+import { Component, ViewEncapsulation } from 'angular2/core';
+
+@Component({
+  selector: 'app',
+  template: '&lt;div class="hero"&gt;Hello&lt;/div&gt;',
+  styles: ['.hero { color: #ccc; }']
+})
+class App {}
+          </code></pre>
+          <p class="fragment" data-code-focus="6,7">
+
+          </p>
+          <p class="fragment" data-code-focus="6,7">
+            <code>.hero</code> => <code>.hero[_ngcontent-qyx-1]</code>
+          </p>
+        </section>
+
+        <section>
+          <h3>Native by request</h3>
+         <pre><code contenteditable>
+import { Component, ViewEncapsulation } from 'angular2/core';
+
+@Component({
+  selector: 'app',
+  template: '&lt;div class="hero"&gt;Hello&lt;/div&gt;',
+  styles: ['.hero { color: #ccc; }'],
+  encapsulation: ViewEncapsulation.Native
+})
+class App {}
+          </code></pre>
+          <p class="fragment" data-code-focus="2,8">
+            <code>native</code> encapsulation mode can be enabled
+          </p>
+        </section>
+
+        <section>
+          <iframe src="https://embed.plnkr.co/Mx4Z8r9EyLcJKOMu7W5C/" frameborder="0" width="500" height="500"></iframe>
+        </section>
+
+        <section>
+          <h3>Is Angular component <em>this</em> web component?</h3>
+          <p class="fragment">Not yet</p>
+        </section>
+
+        <section>
+         <h1>Change Detection</h1>
+        </section>
+
+        <section>
+         <h3>Remember digest loop?</h3>
+         <img class="fragment" src="img/digest.png" alt="">
+         <h2 class="fragment">It's gone</h2>
+        </section>
+
+        <section>
+         <h3>How does it work by default?</h3>
+        </section>
+
+        <section data-transition="slide-in fade-out">
+         <h3>Component Tree</h3>
+         <img src="img/d111.svg" class="img-raw" style="width: 600px; left: 20px; position: relative;" alt="tree">
+        </section>
+
+        <section data-transition="fade-in fade-out">
+         <h3>Default CD</h3>
+         <img src="img/d22.svg" class="img-raw" style="width: 600px; left: 20px; position: relative;" alt="tree">
+        </section>
+
+        <section data-transition="fade-in slide-out">
+         <h3>Goal</h3>
+         <img src="img/d33.svg" class="img-raw" style="width: 600px; left: 20px; position: relative;" alt="tree">
+        </section>
+
+        <section>
+         <h3>How to achieve this?</h3>
+        </section>
+
+        <section>
+          <h3>Mutable objects are the problem</h3>
+        </section>
+
+        <section>
+          <h3>OnPush</h3>
+         <pre><code contenteditable>
+import { Component, Input, ChangeDetectionStrategy } from 'angular2/core';
+
+@Component({
+  selector: 'child-component',
+  template: '&lt;span&gt;{{ name }}&lt;/span&gt;',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+class ChildComponent {
+  @Input() name: string;
+
+  ngOnChanges({ name }) {
+    console.debug('name changed to:', name);
+  }
+}
+          </code></pre>
+          <p class="fragment" data-code-focus="2,7">
+            Change Detection Strategy
+          </p>
+          <p class="fragment" data-code-focus="6,10,12-14">
+            It works only when input changes or event is fired
+          </p>
+        </section>
+
+        <section>
+          <h2>Only for immutable inputs</h2>
+        </section>
+
+        <section>
+          <h1>
+            <a href="plnkr.co/edit/Gdivo0QA6Yyo9UTO8K0r" target="_blank">Demo</a>
+          </h1>
+        </section>
+
+        <section>
+          <h3>Manual</h3>
+         <pre><code contenteditable>
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from 'angular2/core';
+
+@Component({
+  selector: 'child-component',
+  template: '&lt;span&gt;{{ name }}&lt;/span&gt;',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+class ChildComponent {
+  @Input() event: Observable&lt;boolean&gt;;
+
+  constructor(private cd: ChangeDetectorRef) {}
+
+  ngOnInit() {
+    this.event.subscribe(() => {
+      this.cd.markForCheck();
+    });
+  }
+}
+          </code></pre>
+          <p class="fragment" data-code-focus="12">
+            Inject ChangeDetectorRef
+          </p>
+          <p class="fragment" data-code-focus="10,15-17">
+            Mark for check when needed
+          </p>
+        </section>
+
+        <!-- <section>
+          <h1><a href="https://my.livechatinc.com/customers" target="_blank">Demo</a></h1>
+        </section> -->
+
+        <section>
+          <h1>RxJS</h1>
+        </section>
+
+        <section>
+          <h2><em>Observables</em> are next gen <em>Promises</em></h2>
+        </section>
+
+        <section>
+          <h3>They're inside</h3>
+          <pre><code contenteditable>
+constructor(http: Http) {
+  http.get('songs.json')
+    .retry(5)
+    .map(res => res.json())
+    .subscribe(
+      songs => this.songs = songs,
+      err => console.error(err.text()),
+      () => console.log('completed')
+    );
+}
+          </code></pre>
+          <p class="fragment" data-code-focus="6-10">
+            subscribing to <em>Observable</em> is basic
+          </p>
+          <p class="fragment" data-code-focus="4">
+            but we do have more powerful operators
+          </p>
+        </section>
+
+        <section>
+          <h1>What more?</h1>
+        </section>
+
+        <section>
+          <h2>Another important stuff</h2>
+          <ul>
+            <li class="fragment"><a href="https://github.com/angular/angular-cli">Angular 2 CLI</a></li>
+            <li class="fragment">server-side rendering: <a href="https://github.com/angular/universal">angular-universal</a></li>
+            <li class="fragment">redux can be used: <a href="https://github.com/wbuchwalter/ng2-redux">ng2-redux</a></li>
+            <li class="fragment">but <a href="https://github.com/ngrx/store">@ngrx/store</a> is better</li>
+            <li class="fragment">mobile: <a href="http://ionicframework.com/docs/v2/">Ionic 2</a></li>
+            <li class="fragment">read about testing on <a href="https://developers.livechatinc.com/blog/testing-angular-2-apps-part-1-beginning/">LiveChat blog</a> </li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Wrapping up</h1>
+        </section>
+
+        <section>
+          <h2>Summary</h2>
+          <ul>
+            <li class="fragment">Angular is a complex solution</li>
+            <li class="fragment">performance is a big plus</li>
+            <li class="fragment">can be tweaked easily to be even better</li>
+            <li class="fragment">is production ready</li>
+            <li class="fragment">big team/project</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Thanks!</h2>
+          <p>Any questions?</p>
+          <small><a href="mailto:wojtek.kwiatek@gmail.com">wojtek.kwiatek@gmail.com</a></small>
+        </section>
+
+
+      </div>
+    </div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.pack.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() {
+              hljs.configure({
+                languages: ['typescript']
+              });
+              hljs.initHighlightingOnLoad();
+            }
+          },
+          {
+            src: 'plugin/reveal-code-focus/reveal-code-focus.js',
+            async: true,
+            callback: function() {
+              RevealCodeFocus();
+            }
+          },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true }
+        ]
+      });
+
+    </script>
+
+  </body>
+  </html>
